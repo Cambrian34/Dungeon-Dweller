@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
-public class enemy : MonoBehaviour
+public class enemyai : MonoBehaviour
+
+
 {
+    //rigidbody
+    [SerializeField]Rigidbody2D rb;
+
     [Header("Enemy projectile")]
     [SerializeField] pjlauncher projectile;
 
@@ -41,7 +47,7 @@ public class enemy : MonoBehaviour
     void FixedUpdate()
     {
         //move enemy
-        MoveEnemy();
+        //MoveEnemy();
 
 
     }
@@ -49,7 +55,7 @@ public class enemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         //check if enemy is hit by player projectile
-        if (collision.CompareTag("projectile"))
+        if (collision.CompareTag("Fireball"))
         {
             //Debug.Log("Break apart!");
             //destroy enemy
@@ -60,7 +66,7 @@ public class enemy : MonoBehaviour
             //break apart enemy
             dropFuel();
             //spwan new enemy
-            SpawnNewEnemy();
+           // SpawnNewEnemy();
 
         }
         //if another thing collides, output to console
@@ -68,6 +74,7 @@ public class enemy : MonoBehaviour
 
         //print("enemy hit");
     }
+    
     //use bounds to move enemy
     public void MoveEnemy()
     {
@@ -100,7 +107,7 @@ public class enemy : MonoBehaviour
         //shoot projectile every 2 seconds 
         if (Time.time % 2 == 0)
         {
-            projectile.LaunchProjectileNeg();
+            LaunchFireball();
         }
 
 
@@ -146,9 +153,9 @@ public class enemy : MonoBehaviour
     {
         GameObject fuel = Instantiate(Fuel, transform.position, Quaternion.identity);
         //add gravity to fuel
-        fuel.GetComponent<Rigidbody2D>().gravityScale = 1;
+        
         //destroy after 2 seconds
-        Destroy(fuel, 4.0f);
+        //Destroy(fuel, 4.0f);
 
 
     }
@@ -162,7 +169,7 @@ public class enemy : MonoBehaviour
         GameObject newEnemy = Instantiate(enemysource, spwanTransform.position, Quaternion.identity);
 
          // Ensure the enemy's script is enabled
-    enemy enemyScript = newEnemy.GetComponent<enemy>();
+    enemyai enemyScript = newEnemy.GetComponent<enemyai>();
     if (enemyScript != null)
     {
         enemyScript.enabled = true;  // Enable the script if it was disabled
@@ -179,14 +186,32 @@ public class enemy : MonoBehaviour
 
     }
 
+    public  void MoveToward(Vector3 playerposition)
+    {
+        playerposition.z = 0;
+        Vector3 direction = playerposition - transform.position;
+        Move(direction.normalized);
+    }
 
+    public void Move(Vector3 movement)
+    {
+        rb.AddForce(movement * speed);
+    }
 
+    public void LaunchFireball()
+    {
+        projectile.LAunchFireEnemyAi();
+    }
 
-
-
-
-
-
-
-
+    public void LaunchFirebal2()
+    {
+        projectile.LaunchFireball(1);
+    }
+    public void StopMoving()
+    {
+        rb.velocity = Vector3.zero;
+    }
+    public pjlauncher GetProjectileLauncher(){
+        return projectile;
+    }
 }

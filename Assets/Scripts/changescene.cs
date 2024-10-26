@@ -5,11 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class changescene : MonoBehaviour
 {
-    public void changeToScene()
-    {
-        SceneManager.LoadScene("Starship");
-        //print("Scene Changed");
-    }
+    
     //exit the game
     public void exitGame()
     {
@@ -22,4 +18,14 @@ public class changescene : MonoBehaviour
         SceneManager.LoadScene("Main");
         //print("Scene Changed");
     }
+
+    //new game
+    public void newGame()
+    {
+        SceneManager.LoadScene("ClassAndWeaponSelection");
+        //print("Scene Changed");
+    }
+
+    //load game from save
+
 }

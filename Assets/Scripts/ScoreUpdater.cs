@@ -26,7 +26,7 @@ public class ScoreUpdater : MonoBehaviour
     void Update()
     {
         score = player.score;
-        ScoreText.text = "Score: " + score;
+        ScoreText.text = "Gold: " + score;
         
     }
     
