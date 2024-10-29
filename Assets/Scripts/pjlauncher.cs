@@ -1,18 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class pjlauncher : MonoBehaviour
 
 {
     [Header("Ammo")]
+
     [SerializeField] int maxAmmo = 10;
     [SerializeField] int currentAmmo = 10;
     [SerializeField] float maxReloadTime = 10;
     [SerializeField] float cooldownTime = .25f;
     float currentReloadTime = 0;
-     bool coolingDown = false;
+    bool coolingDown = false;
 
 
     [Header("Fire Projectile")]
@@ -45,7 +44,7 @@ public class pjlauncher : MonoBehaviour
         GameObject newpj = Instantiate(projectilePrefab, spwanTransform.position, Quaternion.identity);
 
         Rigidbody2D rb = newpj.GetComponent<Rigidbody2D>();
-        //audioSource.Play();
+        audioSource.Play();
         //audioSource.pitch = Random.Range(1 - pitchRange, 1 + pitchRange);
         //set gameobject tag to projectile
         //newpj.tag = "projectile";
@@ -96,7 +95,7 @@ public class pjlauncher : MonoBehaviour
         GameObject newProjectile = Instantiate(projectilePrefab, spwanTransform.position, Quaternion.identity);
         newProjectile.GetComponent<Rigidbody2D>().velocity = new Vector3(direction*speed ,0, 0);
         //audioSource.pitch = Random.Range(1f-pitchRange,1f+pitchRange);
-        //audioSource.Play();
+        audioSource.Play();
 
         Destroy(newProjectile,2);
        

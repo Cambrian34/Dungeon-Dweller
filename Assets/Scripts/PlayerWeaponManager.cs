@@ -5,7 +5,7 @@ using TMPro;
 using System;
 public class PlayerWeaponManager : MonoBehaviour
 {
-    public Weapon equippedWeapon;
+    [SerializeField] Weapon equippedWeapon;
 
     [SerializeField]Transform weaponHolder;
     [SerializeField] Weapon defaultWeapon;

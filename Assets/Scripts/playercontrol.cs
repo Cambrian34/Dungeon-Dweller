@@ -20,14 +20,13 @@ public class playercontrol : MonoBehaviour
 
     
 
-    [Header("Audio")]
-    [SerializeField] AudioSource audioSource;
+    
 
     //save manager
     SaveSystem saveSystem;
 
     //check the last direction the player was facing
-    public bool facingRight = true;
+    [SerializeField] bool facingRight = true;
 
     //rigidbody 
     [SerializeField] Rigidbody2D rb;
@@ -227,6 +226,8 @@ public class playercontrol : MonoBehaviour
             weaponTransform.localRotation = Quaternion.Euler(0, 180, 0);
         }
     }
+
+    
     
 
 

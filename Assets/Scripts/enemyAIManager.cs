@@ -27,6 +27,11 @@ public class enemyAIManager : MonoBehaviour
     [Header("Hp")]
     [SerializeField] int hp = 200;
     HealthSystem healthSystem;
+
+    [Header("Audio")]
+    [SerializeField] AudioSource audioSource;
+    [Range(0, 1)]
+
     //public Slider healthSlider;//implement later
 
     //direction of enemy
@@ -77,6 +82,9 @@ public class enemyAIManager : MonoBehaviour
         }
         // Drop gold
         dropGold();
+
+        // Play the enemy death sound
+        audioSource.Play();
 
         
         // Trigger enemy death sound, and logic
@@ -143,7 +151,7 @@ public class enemyAIManager : MonoBehaviour
 
         //print("enemy hit");
     }
-    
+    //redact
     //use bounds to move enemy
     public void MoveEnemy()
     {
