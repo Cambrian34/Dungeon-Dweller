@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Staff
   damage: 10
   attackSpeed: 5
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 1416940181648969215, guid: 646fdeb8caa3a4e40a1ff641b76d1323, type: 3}
   hasSpecialAbility: 1
   specialAbilityName: Fireball
+  specialAbilityDamage: 0

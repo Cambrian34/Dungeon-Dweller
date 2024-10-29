@@ -9,7 +9,7 @@ public class ScoreUpdater : MonoBehaviour
     //get from player script
     
     [SerializeField] int score = 0;
-    [SerializeField] playercontrol player;
+    [SerializeField] PlayerClassManager player;
     
     [SerializeField] TextMeshProUGUI ScoreText;
 
@@ -25,7 +25,7 @@ public class ScoreUpdater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        score = player.score;
+        score = player.Gold;
         ScoreText.text = "Gold: " + score;
         
     }

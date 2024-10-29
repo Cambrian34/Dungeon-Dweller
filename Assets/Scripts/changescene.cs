@@ -15,7 +15,7 @@ public class changescene : MonoBehaviour
     //change to main menu
     public void changeToMainMenu()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("MainMenu");
         //print("Scene Changed");
     }
 
@@ -27,5 +27,13 @@ public class changescene : MonoBehaviour
     }
 
     //load game from save
+
+
+    //options
+    public void options()
+    {
+        SceneManager.LoadScene("Options");
+        //print("Scene Changed");
+    }
 
 }

@@ -77,5 +77,6 @@ public class PlayerClass : ScriptableObject
         specialAbilityName = "Arrow Rain";
         specialAbilityCooldown = 12;
     }
+    
 
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Sword
   damage: 0
   attackSpeed: 0
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 2736321886196732523, guid: e08b4ceeba42b4c2c8d773283c2e0e96, type: 3}
   hasSpecialAbility: 1
   specialAbilityName: 
   specialAbilityDamage: 0

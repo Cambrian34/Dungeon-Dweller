@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class playercontrol : MonoBehaviour
 {
-    public float speed = 10.0f;
+    [SerializeField] float speed = 5.0f;
+    [SerializeField] float jumpForce = 5.0f;
+
 
     [Header("Tools")]
     [SerializeField] pjlauncher projectile;
 
 
-    [Header("Score")]
-    public  int score = 0;
+    [Header("Weapon")]
+    [SerializeField] Transform weaponTransform;
+
+
+    
 
     [Header("Audio")]
     [SerializeField] AudioSource audioSource;
@@ -22,7 +27,14 @@ public class playercontrol : MonoBehaviour
     SaveSystem saveSystem;
 
     //check the last direction the player was facing
-    private bool facingRight = true;
+    public bool facingRight = true;
+
+    //rigidbody 
+    [SerializeField] Rigidbody2D rb;
+
+    [SerializeField] private PlayerClassManager playerclass;
+    [SerializeField] private PlayerWeaponManager playerWeapon;
+
 
 
 
@@ -35,12 +47,14 @@ public class playercontrol : MonoBehaviour
         {
             MoveLeft();
             facingRight = false;
+            UpdateWeaponRotation();
         }
         //move right
          if (Input.GetKey(KeyCode.D))
         {
             MoveRight();
             facingRight = true;
+            UpdateWeaponRotation();
         }
         //move up
          if (Input.GetKeyDown(KeyCode.W))
@@ -55,6 +69,8 @@ public class playercontrol : MonoBehaviour
         //launch projectile
         if (Input.GetKeyDown(KeyCode.Space))
         {   
+            ShootProjectile();
+            /*
             try{
             //check player class for projectile
             if (PlayerSaveData.selectedClass.className == "Archer")
@@ -99,7 +115,9 @@ public class playercontrol : MonoBehaviour
                     LaunchProjectile(-1);
                 }
                
-            }
+            }*/
+
+
         }
 
         if (Input.GetKey(KeyCode.Escape))
@@ -129,7 +147,9 @@ public class playercontrol : MonoBehaviour
     public void MoveUp()
     {
         //transform.position += new Vector3(0, 1, 0);
-        GetComponent<Transform>().localPosition += new Vector3(0, 2*speed*Time.deltaTime, 0);
+        //GetComponent<Transform>().localPosition += new Vector3(0, 2*speed*Time.deltaTime, 0);
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
 
         
     }
@@ -158,35 +178,56 @@ public class playercontrol : MonoBehaviour
         //audioSource.Play();
     }
 
-    //collision detection
-    void OnTriggerEnter2D(Collider2D collision)
+
+    private void ShootProjectile()
     {
-        //check if enemy is hit by player projectile
-        if(collision.CompareTag("Wall")){
-            
-            
-            //destroy projectile
-            Destroy(collision.gameObject);
-            /*go to main menu
-            changescene sceneChanger = gameObject.AddComponent<changescene>();
-            sceneChanger.changeToMainMenu();
-            */
-        }
+        int direction = facingRight ? 1 : -1;
 
-        //if with fuel add points
-        if(collision.CompareTag("Gold")){
-            //destroy fuel
-            Destroy(collision.gameObject);
-            //add points
-            score += 100;
-            //play sound
-            //audioSource.Play();         //stop sound
-//readd sound later
-        }
-    
+        // Check the equipped weapon and execute the corresponding attack
+        switch (playerWeapon.GetEquippedWeapon())
+        {
+            case "Bow":
+                Debug.Log("Shooting Arrow!");
+                projectile.LaunchArrow(direction);
+                //PlayAttackSound();
+                break;
 
-        //print("enemy hit");
+            case "Sword":
+                Debug.Log("Swinging Sword!");
+                SwordAttack();
+                break;
+
+            case "Default":
+            default:
+                Debug.Log("Default projectile launched.");
+                projectile.PlayerLauncher(direction);
+                //PlayAttackSound();
+                Debug.Log("Default projectile launched.");
+                break;
+        }
     }
+
+
+    //weapon dirwection
+
+    // Update weapon rotation based on player's facing direction
+    private void UpdateWeaponRotation()
+    {
+        if (weaponTransform == null) return;
+
+        if (facingRight)
+        {
+            // Rotate weapon to face right
+            
+            weaponTransform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            // Rotate weapon to face left
+            weaponTransform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+    }
+    
 
 
 }

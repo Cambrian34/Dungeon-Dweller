@@ -1,7 +1,8 @@
 using UnityEngine;
 
 [System.Serializable]
-public class ItemObject
+[CreateAssetMenu(fileName = "NewItem", menuName = "Item")]
+public class ItemObject: ScriptableObject
 {
     public string itemName;
     public string description;
@@ -15,5 +16,8 @@ public class ItemObject
         icon = iconSprite;
         quantity = qty;
     }
+
+    
+   
 }
 

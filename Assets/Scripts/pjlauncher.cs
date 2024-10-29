@@ -37,7 +37,7 @@ public class pjlauncher : MonoBehaviour
     // Start is called before the first frame update
 
 
-     void Awake(){
+    void Awake(){
         currentAmmo = maxAmmo;
     }
     public void PlayerLauncher(int direction)
@@ -67,8 +67,9 @@ public class pjlauncher : MonoBehaviour
     //negative speed version for enemy
     public void LAunchFireEnemyAi()
     {
+         Cooldown();
         GameObject pj = Instantiate(projectilePrefab, spwanTransform.position, Quaternion.identity);
-        pj.GetComponent<Rigidbody2D>().velocity = new Vector3(0, -speed, 0);
+        pj.GetComponent<Rigidbody2D>().velocity = new Vector3(speed,0, 0);
 
         Destroy(pj, 4.0f);
         //i dont want audio for enemy projectile, wouldve been confusing
@@ -78,6 +79,10 @@ public class pjlauncher : MonoBehaviour
     public void LaunchArrow(int direction)
     {
         GameObject arrow = Instantiate(arrowPrefab, spwanTransform.position, Quaternion.identity);
+        //rotate arrow 90 degrees in y axis
+        arrow.transform.Rotate(0, 0, direction*90);
+
+        
         arrow.GetComponent<Rigidbody2D>().velocity = new Vector3(direction*speed, 0, 0);
         Destroy(arrow, 5.0f);
     }
@@ -105,7 +110,9 @@ public class pjlauncher : MonoBehaviour
             coolingDown = false;
         }
     }
-     bool currentlyReloading = false;
+
+    bool currentlyReloading = false;
+
     public void Reload(){
 
         if(currentlyReloading){

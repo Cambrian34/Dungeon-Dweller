@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4832783666283289551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7862017535194019439}
+  m_Layer: 0
+  m_Name: weapon holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7862017535194019439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4832783666283289551}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.78, y: 0.29, z: 0.7830727}
+  m_LocalScale: {x: 2.2507315, y: 2.2209175, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1235126649753132043}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6673972464121271033
 GameObject:
   m_ObjectHideFlags: 0
@@ -17,7 +48,7 @@ GameObject:
   - component: {fileID: 3850384743233474550}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,6 +67,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7403682796545783064}
+  - {fileID: 7862017535194019439}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8224729060365707046
@@ -103,6 +135,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerClass: {fileID: 11400000, guid: 8ade81c444fac4d3b933476441c0ca70, type: 2}
+  defaultClass: {fileID: 11400000, guid: 8ade81c444fac4d3b933476441c0ca70, type: 2}
+  defaultWeapon: {fileID: 11400000, guid: db5b4773833364cf39fa89fd10665b8f, type: 2}
+  health: 100
+  healthSlider: {fileID: 0}
+  Gold: 0
 --- !u!114 &188715277166883817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,9 +153,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  jumpForce: 7
   projectile: {fileID: 6701353050754540840}
-  score: 0
+  weaponTransform: {fileID: 1235126649753132043}
   audioSource: {fileID: 0}
+  facingRight: 1
+  rb: {fileID: 5778330989988185496}
+  playerclass: {fileID: 3571995738033652239}
+  playerWeapon: {fileID: 3850384743233474550}
 --- !u!50 &5778330989988185496
 Rigidbody2D:
   serializedVersion: 4
@@ -194,6 +236,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equippedWeapon: {fileID: 11400000, guid: db5b4773833364cf39fa89fd10665b8f, type: 2}
+  weaponHolder: {fileID: 7862017535194019439}
+  defaultWeapon: {fileID: 11400000, guid: db5b4773833364cf39fa89fd10665b8f, type: 2}
+  equip1: 0
+  equip2: 0
 --- !u!1 &6709663511839745171
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,9 +284,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1e6e1cba20b41da8abe727b952c66f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxAmmo: 10
+  currentAmmo: 10
+  maxReloadTime: 10
+  cooldownTime: 0.25
   projectilePrefab: {fileID: 6100681437196270725, guid: a942cc9660cb7457db5bc01962345885, type: 3}
   arrowPrefab: {fileID: 7954786091679212353, guid: d980c8bcff5e04b7080af966d6ed2daa, type: 3}
-  spwanTransform: {fileID: 1235126649753132043}
+  spwanTransform: {fileID: 7862017535194019439}
   speed: 5
   audioSource: {fileID: 0}
   pitchRange: 0.2

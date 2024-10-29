@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5012930437438110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4191413126346479804}
+  m_Layer: 0
+  m_Name: enemyprojectiletrasform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4191413126346479804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5012930437438110}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.41995743, y: 0.04211409, z: 0.7851534}
+  m_LocalScale: {x: 0.4940676, y: 2.1057065, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1649403338213467991}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1255225889598296023
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,10 +78,10 @@ MonoBehaviour:
   maxAmmo: 10
   currentAmmo: 10
   maxReloadTime: 10
-  cooldownTime: 0.25
-  projectilePrefab: {fileID: 5347277812237125241, guid: f50c53c36bef54364bb003ae0a6eba40, type: 3}
+  cooldownTime: 1
+  projectilePrefab: {fileID: 6100681437196270725, guid: 9d33a6a80975a49d4ad9e92f1fa8874e, type: 3}
   arrowPrefab: {fileID: 7954786091679212353, guid: d980c8bcff5e04b7080af966d6ed2daa, type: 3}
-  spwanTransform: {fileID: 15363824843537651}
+  spwanTransform: {fileID: 4191413126346479804}
   speed: 5
   audioSource: {fileID: 0}
   pitchRange: 0.2
@@ -89,6 +120,7 @@ Transform:
   m_Children:
   - {fileID: 1152987464152320766}
   - {fileID: 15363824843537651}
+  - {fileID: 4191413126346479804}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &397664944853905873
@@ -180,6 +212,7 @@ MonoBehaviour:
   player: {fileID: 0}
   currentStateString: IdleState
   sightDistance: 2
+  attackDelay: 0.5
 --- !u!114 &1442077641642171589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,10 +227,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1576923371289648588}
   projectile: {fileID: 8087154120510710260}
-  Fuel: {fileID: 4088772801818300969, guid: cb9c6af84c43e41caaecca81fc86f789, type: 3}
-  speed: 5
+  Gold: {fileID: 4088772801818300969, guid: cb9c6af84c43e41caaecca81fc86f789, type: 3}
+  speed: 1
   enemysource: {fileID: 3001802367929581477}
   spwanTransform: {fileID: 1649403338213467991}
+  hp: 200
 --- !u!1 &5057936124654825984
 GameObject:
   m_ObjectHideFlags: 0

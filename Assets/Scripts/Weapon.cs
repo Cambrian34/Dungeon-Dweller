@@ -24,5 +24,11 @@ public class Weapon : ScriptableObject
         }
     }
 
+    //get equipped weapon
+    public string GetEquippedWeapon()
+    {
+        return weaponName;
+    }
+
 
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -7,9 +8,31 @@ public class InventoryUI : MonoBehaviour
     public Transform inventoryPanel;  // UI panel to display items
     public GameObject itemSlotPrefab; // Prefab for each inventory slot
 
+    //icons for items
+    
+    public Sprite healthPotionIcon;
+    
+    public Sprite manaPotionIcon;
+    public Sprite staminaPotionIcon;
+    /*
+    public Sprite swordIcon;
+    public Sprite shieldIcon;
+    public Sprite bowIcon;
+    public Sprite arrowIcon;
+    public Sprite staffIcon;
+    public Sprite wandIcon;
+    */
+
+    //array of icons
+    //public Sprite[] itemIcons;
+    
+
+
+
     void Start()
     {
         UpdateUI();
+        
     }
 
     public void UpdateUI()
@@ -31,6 +54,88 @@ public class InventoryUI : MonoBehaviour
         foreach (ItemObject item in inventory.items)
         {
             GameObject slot = Instantiate(itemSlotPrefab, inventoryPanel);
+
+            // Set the item name and quantity in the slot
+            //USING TMPro
+            if(item.itemName == "Health Potion")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                //set item name to object name
+                texts[0].text = item.itemName;
+                //set image to health potion icon
+                Image[] images = slot.GetComponentsInChildren<Image>();
+
+                //set icon to health potion
+                images[0].sprite = healthPotionIcon;
+
+                
+
+                
+            }
+            
+            else if(item.itemName == "Mana Potion")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                texts[0].text = item.itemName;
+
+                //set image to mana potion icon
+                Image[] images = slot.GetComponentsInChildren<Image>();
+
+                //set icon to mana potion
+                images[0].sprite = manaPotionIcon;
+
+            }
+            else if(item.itemName == "Stamina Potion")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                texts[0].text = item.itemName;
+
+                //set image to stamina potion icon
+                Image[] images = slot.GetComponentsInChildren<Image>();
+
+                //set icon to stamina potion
+                images[0].sprite = staminaPotionIcon;
+            }
+            /*
+            else if(item.itemName == "Sword")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                //texts[0].text = item.itemName;
+            }
+            else if(item.itemName == "Shield")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                //texts[0].text = item.itemName;
+            }
+            else if(item.itemName == "Bow")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                //texts[0].text = item.itemName;
+            }
+            else if(item.itemName == "Arrow")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                //texts[0].text = item.itemName;
+            }
+            else if(item.itemName == "Staff")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                //texts[0].text = item.itemName;
+            }
+            else if(item.itemName == "Wand")
+            {
+                TextMeshProUGUI[] texts = slot.GetComponentsInChildren<TextMeshProUGUI>();
+                //texts[0].text = item.itemName;
+            }*/
+            else
+            {
+                Debug.LogError("Item not found");
+            }
+            
+
+            //set icon beased on item 
+            
+
             
     
             Button itemButton = slot.GetComponent<Button>();
@@ -52,6 +157,13 @@ public class InventoryUI : MonoBehaviour
         // Define what happens when an item is used
         //if (item.itemName == "Health Potion")
         //destroy item
+        if(item.itemName == "Health Potion")
+        {
+            //heal player
+            //player.AddHealth(10);
+            inventory.AddHealth(10);
+            Debug.Log("Player health increased by 10");
+        }
         inventory.RemoveItem(item);
         UpdateUI();
 

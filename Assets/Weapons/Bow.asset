@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4fef61581d14bd5a822b353452293d, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
-  weaponName: 
+  weaponName: Bow
   damage: 0
   attackSpeed: 0
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 2249381839758788776, guid: 63357e5bc0bb24caab45cf6adbc01635, type: 3}
   hasSpecialAbility: 0
   specialAbilityName: 
+  specialAbilityDamage: 0
