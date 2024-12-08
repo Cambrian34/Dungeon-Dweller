@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 030343ca14d914045b3a869a4ed70ce5
+guid: aa948343b54354fdd948abe08743168a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8868152335114448780
-    second: Untitled_Artwork_2-removebg-preview_0
+      213: 6858375994061600646
+    second: Untitled_Artwork_3-removebg-preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player
+      name: Untitled_Artwork_3-removebg-preview_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 599
         height: 416
-      alignment: 9
-      pivot: {x: 0.49677014, y: 0.50465095}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c8f2c843091021b70800000000000000
-      internalID: 8868152335114448780
+      spriteID: 687bb1e11a8dd2f50800000000000000
+      internalID: 6858375994061600646
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d2baad3e9cfc34873bbab7b6cf275c4c
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      player: 8868152335114448780
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

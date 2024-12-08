@@ -134,7 +134,7 @@ public class enemyAIManager : MonoBehaviour
         if (collision.CompareTag("Arrow"))
         {
             //destroy projectile
-            //Destroy(collision.gameObject);
+            Destroy(collision.gameObject);
             //lower hp
             healthSystem.TakeDamage(60);
             Debug.Log("Enemy hp: " + healthSystem.GetHealth());

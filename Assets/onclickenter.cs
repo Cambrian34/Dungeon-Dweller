@@ -41,7 +41,12 @@ public class OnClickEnter : StateMachineBehaviour
                 }
                 else if (animator.gameObject.scene.name == "Level 3")
                 {
-                   sceneChanger.changescene1("Main Game");
+                   sceneChanger.changescene1("Main Menu");
+                }
+                ////stopping at lv2 for now
+                else if (animator.gameObject.scene.name == "Level 2")
+                {
+                    sceneChanger.changescene1("Main Menu");
                 }
                 else
                 {

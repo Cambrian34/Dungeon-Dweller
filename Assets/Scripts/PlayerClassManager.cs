@@ -4,8 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
-
 
 public class PlayerClassManager : MonoBehaviour
 {
@@ -14,16 +12,16 @@ public class PlayerClassManager : MonoBehaviour
     [SerializeField] PlayerClass defaultClass;
     [SerializeField] Weapon defaultWeapon;
     private GameObject currentWeapon;
+    
     [Header("Health")]
-    public int health=100;
+    public int health = 100;
     private HealthSystem healthSystem;
-
     public Slider healthSlider;
-    public Image healthBarImage;
 
     private Weapon equippedWeapon;
+
     [Header("Gold")]
-    public  int Gold = 0;
+    public int Gold = 0;
     internal int Stamina;
     internal int Mana;
 
@@ -33,6 +31,7 @@ public class PlayerClassManager : MonoBehaviour
         playerClass = PlayerSaveData.selectedClass;
         equippedWeapon = PlayerSaveData.selectedWeapon;
 
+        // Initialize the health system
         healthSystem = new HealthSystem(health);
         healthSlider.maxValue = health;
         healthSlider.value = healthSystem.CurrentHealth;
@@ -41,57 +40,44 @@ public class PlayerClassManager : MonoBehaviour
         {
             // Initialize the player with the selected class and weapon
             Debug.Log("Player Class: " + playerClass.className + ", Weapon: " + equippedWeapon.weaponName);
-            //EquipWeapon(equippedWeapon.weaponPrefab);
-            //set health
-            health = playerClass.maxHealth;
+            // Equip weapon and set health
+            playerClass.maxHealth = 100;
+            health = playerClass.maxHealth; // Ensure health is set from player class max health
+            healthSystem = new HealthSystem(health);
         }
         else
         {
             Debug.LogError("No class or weapon selected!");
-            //set default class and weapon
+            // Set default class and weapon
             playerClass = defaultClass;
             equippedWeapon = defaultWeapon;
-            //EquipWeapon(equippedWeapon.weaponPrefab);
-            //set health
             playerClass.maxHealth = 100;
             health = playerClass.maxHealth;
+            healthSystem = new HealthSystem(health);
         }
     }
 
-
-
-    
-     public void ActivateClassAbility()
+    public void ActivateClassAbility()
     {
-        playerClass.UseSpecialAbility();  // Call the class-specific ability
+        playerClass.UseSpecialAbility(); // Call the class-specific ability
     }
 
     public void TakeDamage(int damageAmount)
     {
         healthSystem.TakeDamage(damageAmount);
-        //healthSlider.value = healthSystem.CurrentHealth;
-         UpdateHealthBar();
+        healthSlider.value = healthSystem.CurrentHealth;
+        UpdateHealthBar();
 
         if (healthSystem.IsDead())
         {
             Die();
         }
     }
-    //transform image size based on health
-    private void UpdateHealthBar()
-    {
-        if (healthBarImage != null)
-        {
-            // Update health bar image's fill amount based on current health
-            healthBarImage.fillAmount = (float)healthSystem.CurrentHealth / healthSystem.MaxHealth;
-        }
-    }
 
     public void Heal(int healAmount)
     {
         healthSystem.Heal(healAmount);
-        //healthSlider.value = healthSystem.CurrentHealth;
-         UpdateHealthBar();
+        healthSlider.value = healthSystem.CurrentHealth;
     }
 
     private void Die()
@@ -101,70 +87,72 @@ public class PlayerClassManager : MonoBehaviour
 
         // Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
 
-    //collision detection
+    // Collision detection
     void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        //if with fuel add points
-        if(collision.CompareTag("Gold")){
-            //destroy fuel
-            Destroy(collision.gameObject);
-            //add points
-            Gold += 100;
-            //play sound
-            //audioSource.Play();         //stop sound
+        // If with gold, add points
+        if (collision.CompareTag("Gold"))
+        {
+            Destroy(collision.gameObject); // Destroy gold object
+            Gold += 100; // Add points
         }
-        //if hit by enemy projectile
-        if(collision.CompareTag("enemy projectile")){
-            //destroy projectile
-            Destroy(collision.gameObject);
-            //go to main menu
-            //changescene sceneChanger = gameObject.AddComponent<changescene>();
-            //sceneChanger.changeToMainMenu();
-            //reduce health
-            //healthSystem.Damage(10);
-            TakeDamage(10);
+        // If hit by enemy projectile
+        if (collision.CompareTag("enemy projectile"))
+        {
+            Destroy(collision.gameObject); // Destroy projectile
+            TakeDamage(10); // Apply damage
         }
-        //touches damage zone
-        if(collision.CompareTag("damage zone")){
-            
-            //go to main menu
+        // Touches damage zone
+        if (collision.CompareTag("damage zone"))
+        {
+            // Go to main menu
             changescene sceneChanger = gameObject.AddComponent<changescene>();
             sceneChanger.changeToMainMenu();
         }
+
+        // If player touches ghost, lose health
+        if (collision.CompareTag("ghost"))
+        {
+            TakeDamage(10); // Apply damage
+        }
     }
 
-
-    //get health
+    // Get health
     public int GetHealth()
     {
         return healthSystem.CurrentHealth;
     }
 
-    //add hp
-    public void AddHealth(int health)
+    // Add health
+    public void AddHealth(int healthAmount)
     {
-        healthSystem.Heal(health);
+        healthSystem.Heal(healthAmount);
         healthSlider.value = healthSystem.CurrentHealth;
     }
 
-    //damage player
+    // Damage player
     public void Damage(int damage)
     {
         healthSystem.TakeDamage(damage);
         healthSlider.value = healthSystem.CurrentHealth;
     }
 
-    internal void AddStamina(int v)
+    // Implementing Stamina and Mana
+    internal void AddStamina(int value)
     {
-        throw new NotImplementedException();
+        Stamina += value;
     }
 
-    internal void AddMana(int v)
+    internal void AddMana(int value)
     {
-        throw new NotImplementedException();
+        Mana += value;
+    }
+
+    // Helper method to update health bar
+    private void UpdateHealthBar()
+    {
+        healthSlider.value = healthSystem.CurrentHealth;
     }
 }

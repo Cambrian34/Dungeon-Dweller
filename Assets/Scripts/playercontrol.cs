@@ -67,11 +67,6 @@ public class PlayerControl : MonoBehaviour
             MoveUp();
         }
 
-        // Move down
-        if (Input.GetKey(KeyCode.S))
-        {
-            MoveDown();
-        }
 
         // Attack
         if (Input.GetKeyDown(KeyCode.Space))

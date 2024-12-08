@@ -78,14 +78,14 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 0
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 860693009201884990}
   m_FillRect: {fileID: 1219581583043415720}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.713
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -292,7 +292,7 @@ Transform:
   m_GameObject: {fileID: 2592644462191568160}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.14822014, y: 0.71594054, z: 0}
+  m_LocalPosition: {x: 0.14822014, y: 0.29, z: 0}
   m_LocalScale: {x: 0.30535194, y: 1.2329091, z: 0.86742}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -342,7 +342,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d2e92f3d81f6d47eb8f55eec59cb743b, type: 3}
+  m_Sprite: {fileID: 6858375994061600646, guid: aa948343b54354fdd948abe08743168a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -665,7 +665,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5739603295431968812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,6 +684,10 @@ MonoBehaviour:
   sightDistance: 2
   attackDelay: 0.5
   moveSpeed: 3
+  jumpForce: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &7750239328319690327
 MonoBehaviour:
   m_ObjectHideFlags: 0
