@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 
 public class PlayerClassManager : MonoBehaviour
@@ -18,10 +19,13 @@ public class PlayerClassManager : MonoBehaviour
     private HealthSystem healthSystem;
 
     public Slider healthSlider;
+    public Image healthBarImage;
 
     private Weapon equippedWeapon;
     [Header("Gold")]
     public  int Gold = 0;
+    internal int Stamina;
+    internal int Mana;
 
     void Start()
     {
@@ -65,18 +69,29 @@ public class PlayerClassManager : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         healthSystem.TakeDamage(damageAmount);
-        healthSlider.value = healthSystem.CurrentHealth;
+        //healthSlider.value = healthSystem.CurrentHealth;
+         UpdateHealthBar();
 
         if (healthSystem.IsDead())
         {
             Die();
         }
     }
+    //transform image size based on health
+    private void UpdateHealthBar()
+    {
+        if (healthBarImage != null)
+        {
+            // Update health bar image's fill amount based on current health
+            healthBarImage.fillAmount = (float)healthSystem.CurrentHealth / healthSystem.MaxHealth;
+        }
+    }
 
     public void Heal(int healAmount)
     {
         healthSystem.Heal(healAmount);
-        healthSlider.value = healthSystem.CurrentHealth;
+        //healthSlider.value = healthSystem.CurrentHealth;
+         UpdateHealthBar();
     }
 
     private void Die()
@@ -113,6 +128,13 @@ public class PlayerClassManager : MonoBehaviour
             //healthSystem.Damage(10);
             TakeDamage(10);
         }
+        //touches damage zone
+        if(collision.CompareTag("damage zone")){
+            
+            //go to main menu
+            changescene sceneChanger = gameObject.AddComponent<changescene>();
+            sceneChanger.changeToMainMenu();
+        }
     }
 
 
@@ -136,4 +158,13 @@ public class PlayerClassManager : MonoBehaviour
         healthSlider.value = healthSystem.CurrentHealth;
     }
 
+    internal void AddStamina(int v)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void AddMana(int v)
+    {
+        throw new NotImplementedException();
+    }
 }

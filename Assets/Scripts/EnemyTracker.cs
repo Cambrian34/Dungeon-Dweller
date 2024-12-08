@@ -6,8 +6,10 @@ using UnityEngine;
 public class EnemyTracker : MonoBehaviour
 {
     [SerializeField] private GameObject npcMerchantPrefab; // Merchant NPC prefab
-    private List<enemyAIManager> enemies = new List<enemyAIManager>(); // List to track all enemies
+    public List<enemyAIManager> enemies = new List<enemyAIManager>(); // List to track all enemies
     private Vector3 lastEnemyPosition; // Stores the last enemy's position
+
+    [SerializeField] int enemyCount = 0;//used to check if enemies are being added to the list 
 
     // Method to add an enemy to the tracker
     public void RegisterEnemy(enemyAIManager enemy)
@@ -15,6 +17,7 @@ public class EnemyTracker : MonoBehaviour
         if (!enemies.Contains(enemy))
         {
             enemies.Add(enemy);
+            enemyCount++;
             enemy.OnDeath += HandleEnemyDeath;
         }
     }

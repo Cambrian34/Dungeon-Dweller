@@ -10,8 +10,24 @@ EditorBuildSettings:
     guid: e7c42526b5141424d986aca0ab5e4aac
   - enabled: 1
     path: Assets/Scenes/ClassAndWeaponSelection.unity
-    guid: 1e679af6b94ed4f5db599b57c223def0
+    guid: 6e237f3fac0944eca98d4d06164a80c7
   - enabled: 1
     path: Assets/Scenes/MainGame.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Options.unity
+    guid: 27ffe0497896f4597be1a3f1aa489152
+  - enabled: 0
+    path: Assets/Scenes/SelectionScene.unity
+    guid: 3a4e9e20b781848e7b0b9640aa4cff6c
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: e19ecf68ee5ee4fc38f24323120a63cf
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: 61aaecc08329146bdabce4e5d7db8b13
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: 6cad9bdd949834738a1e72b72dc223bb
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

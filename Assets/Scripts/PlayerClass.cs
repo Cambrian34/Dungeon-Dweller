@@ -13,7 +13,7 @@ using UnityEngine;
     */
 public class PlayerClass : ScriptableObject
 {
-   public string className;   // Class Name (e.g., Warrior)
+   public string className;   // Class Name 
     public int maxHealth;      // Maximum Health
     public float attackPower;  // Basic attack power
     public float speed;        // Movement speed

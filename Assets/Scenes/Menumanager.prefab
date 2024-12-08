@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5244558981546814094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3151374536394064982}
+  - component: {fileID: 4102211912924191561}
+  - component: {fileID: 7134959348374685691}
+  - component: {fileID: 4111753448145002632}
+  m_Layer: 0
+  m_Name: Menumanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3151374536394064982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5244558981546814094}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.044830322, y: 1.2557068, z: -0.021023046}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4102211912924191561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5244558981546814094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c6dc94fdb4e94638ba52854e4eb40ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableClasses:
+  - {fileID: 11400000, guid: 8ade81c444fac4d3b933476441c0ca70, type: 2}
+  - {fileID: 11400000, guid: 39fb27db318354f21b2c80b1a8db12bc, type: 2}
+  - {fileID: 11400000, guid: 947323528b1164cf59cbbfe707010c83, type: 2}
+  availableWeapons:
+  - {fileID: 11400000, guid: db5b4773833364cf39fa89fd10665b8f, type: 2}
+  - {fileID: 11400000, guid: 8c0a52e3fe17f41159c5e525daffb8f1, type: 2}
+  - {fileID: 11400000, guid: 4e0be7104d3664796ae4d9ba9ebc5570, type: 2}
+--- !u!114 &7134959348374685691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5244558981546814094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2883696bb47ed412b969d588c1add729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  classSelectionPanel: {fileID: 0}
+  weaponSelectionPanel: {fileID: 0}
+--- !u!114 &4111753448145002632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5244558981546814094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef565bf17b5a342498a6e8243b73bf53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

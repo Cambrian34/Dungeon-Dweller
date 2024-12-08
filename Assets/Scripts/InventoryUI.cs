@@ -54,6 +54,8 @@ public class InventoryUI : MonoBehaviour
         foreach (ItemObject item in inventory.items)
         {
             GameObject slot = Instantiate(itemSlotPrefab, inventoryPanel);
+            //if duplicate item, increase quantity
+            
 
             // Set the item name and quantity in the slot
             //USING TMPro
@@ -157,14 +159,38 @@ public class InventoryUI : MonoBehaviour
         // Define what happens when an item is used
         //if (item.itemName == "Health Potion")
         //destroy item
+
         if(item.itemName == "Health Potion")
-        {
+        {   
+            Debug.Log(item.quantity);
             //heal player
             //player.AddHealth(10);
             inventory.AddHealth(10);
             Debug.Log("Player health increased by 10");
+            inventory.RemoveItem(item);
         }
-        inventory.RemoveItem(item);
+        else if(item.itemName == "Mana Potion")
+        {
+            //increase mana
+            //player.AddMana(10);
+            inventory.AddMana(10);
+            Debug.Log("Player mana increased by 10");
+            inventory.RemoveItem(item);
+        }
+        else if(item.itemName == "Stamina Potion")
+        {
+            //increase stamina
+            //player.AddStamina(10);
+            inventory.AddStamina(10);
+            Debug.Log("Player stamina increased by 10");
+            inventory.RemoveItem(item);
+        }
+        else
+        {
+            Debug.LogError("Item not found");
+        }
+        
+
         UpdateUI();
 
     }
