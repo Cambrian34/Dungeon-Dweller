@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,14 +17,14 @@ public class changescene : MonoBehaviour
     public void changeToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
-        //print("Scene Changed");
+        print("Scene Changed to Main Menu");
     }
 
     //new game
     public void newGame()
     {
         SceneManager.LoadScene("ClassAndWeaponSelection");
-        //print("Scene Changed");
+        print("Scene Changed to Class and Weapon Selection");
     }
 
     //load game from save
@@ -35,5 +36,12 @@ public class changescene : MonoBehaviour
         SceneManager.LoadScene("Options");
         //print("Scene Changed");
     }
+
+    public void changescene1(String scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
+    
+
 
 }

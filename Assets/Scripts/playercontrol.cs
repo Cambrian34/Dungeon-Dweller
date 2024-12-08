@@ -1,213 +1,203 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-
 using UnityEngine;
 
-public class playercontrol : MonoBehaviour
+
+public class PlayerControl : MonoBehaviour
 {
     [SerializeField] float speed = 5.0f;
-    [SerializeField] float jumpForce = 5.0f;
-
+    //[SerializeField] float jumpForce = 5.0f;
 
     [Header("Tools")]
     [SerializeField] pjlauncher projectile;
 
-
     [Header("Weapon")]
     [SerializeField] Transform weaponTransform;
 
+    // Default weapon
+    [SerializeField] Weapon defaultWeapon;
 
-    
-
-    
-
-    //save manager
+    // Save manager
     SaveSystem saveSystem;
 
-    //check the last direction the player was facing
+    // Inventory system
+    [SerializeField] Inventorysystem inventorySystem;
+
+    // Check the last direction the player was facing
     [SerializeField] bool facingRight = true;
 
-    //rigidbody 
+    // Rigidbody 
     [SerializeField] Rigidbody2D rb;
 
-    [SerializeField] private PlayerClassManager playerclass;
+    //canvas for options
+    [SerializeField] GameObject optionsCanvas;
+
+    void Start()
+    {
+        
+        
+    }
+
+    // Update is called once per frame
     [SerializeField] private PlayerWeaponManager playerWeapon;
-
-
-
-
 
     // Update is called once per frame
     void Update()
     {
-        //move left
+        // Move left
         if (Input.GetKey(KeyCode.A))
         {
             MoveLeft();
             facingRight = false;
             UpdateWeaponRotation();
         }
-        //move right
-         if (Input.GetKey(KeyCode.D))
+
+        // Move right
+        if (Input.GetKey(KeyCode.D))
         {
             MoveRight();
             facingRight = true;
             UpdateWeaponRotation();
         }
-        //move up
-         if (Input.GetKeyDown(KeyCode.W))
+
+        // Move up
+        if (Input.GetKey(KeyCode.W))
         {
             MoveUp();
         }
-        /*move down
-         if (Input.GetKey(KeyCode.S))
+
+        // Move down
+        if (Input.GetKey(KeyCode.S))
         {
             MoveDown();
-        }*/
-        //launch projectile
+        }
+
+        // Attack
         if (Input.GetKeyDown(KeyCode.Space))
-        {   
-            ShootProjectile();
-            /*
-            try{
-            //check player class for projectile
-            if (PlayerSaveData.selectedClass.className == "Archer")
-                {
-                    if (facingRight)
-                    {
-                        BowAttack(1);
-                    }
-                    else
-                    {
-                        BowAttack(-1);
-                    }
-                }
-            else if (PlayerSaveData.selectedClass.className == "Warrior")
-                {
-                    SwordAttack();
-                }
-            else
-                {
-                    //print("Default projectile"); 
-                    //print to console
-                    Debug.Log("Default projectile");
-                    if (facingRight)
-                    {
-                        LaunchProjectile(1);
-                    }
-                    else
-                    {
-                        LaunchProjectile(-1);
-                }
-            }}
-            catch{
-                //print("Default projectile"); 
-                //print to console
-                Debug.Log("Default projectile");
-                if (facingRight)
-                {
-                    LaunchProjectile(1);
-                }
-                else
-                {
-                    LaunchProjectile(-1);
-                }
-               
-            }*/
-
-
-        }
-
-        if (Input.GetKey(KeyCode.Escape))
         {
-            //go to main menu
-            changescene sceneChanger = gameObject.AddComponent<changescene>();
-            sceneChanger.changeToMainMenu();
+            PerformAttack();
         }
 
-        
+        // Escape to main menu
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //show options canvas
+            Toggleoptions();
+
+        }
     }
-    //move left
+
+    //toggle options canvas and pause game by calling the toggle pause method from the inventory system
+    public void Togglepau()
+    {
+        //show options canvas
+        
+        inventorySystem.TogglePause();
+    }
+
+    //toggle options canvas and pause game by calling the toggle pause method from the inventory system
+    public void Toggleoptions()
+    {
+        //check current state of options canvas
+        if (optionsCanvas.activeSelf)
+        {
+            optionsCanvas.SetActive(false);
+            Togglepau();
+        }
+        else
+        {
+            optionsCanvas.SetActive(true);
+            Togglepau();
+        }
+
+    }
+    
+
+    // Move left (one press per move)
     public void MoveLeft()
     {
+        GetComponent<Transform>().localPosition += new Vector3(-(speed * Time.deltaTime), 0, 0);
         //transform.position += new Vector3(-1, 0, 0);
-        GetComponent<Transform>().localPosition += new Vector3(-(speed*Time.deltaTime), 0, 0);
-        }
+    }
 
-    //move right
+    // Move right (one press per move)
     public void MoveRight()
     {
+        GetComponent<Transform>().localPosition += new Vector3(speed * Time.deltaTime, 0, 0);
         //transform.position += new Vector3(1, 0, 0);
-        GetComponent<Transform>().localPosition += new Vector3(speed*Time.deltaTime, 0, 0);
-           }
+    }
 
-    //move up
+    // Move up (one press per move)
     public void MoveUp()
     {
+        GetComponent<Transform>().localPosition += new Vector3(0,speed * Time.deltaTime, 0);
+        //rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // Apply jump force
         //transform.position += new Vector3(0, 1, 0);
-        //GetComponent<Transform>().localPosition += new Vector3(0, 2*speed*Time.deltaTime, 0);
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
 
-
-        
-    }
-
-    //move down
+    // Move down (one press per move)
     public void MoveDown()
-    {
+    {   
+        GetComponent<Transform>().localPosition += new Vector3(0, -speed * Time.deltaTime, 0);
         //transform.position += new Vector3(0, -1, 0);
-        GetComponent<Transform>().localPosition += new Vector3(0, -(30*Time.deltaTime), 0);
     }
-    //launch projectile
+
+    // Launch projectile
     public void LaunchProjectile(int direction)
     {
         projectile.PlayerLauncher(direction);
     }
-    public void SwordAttack()
-    {   
-        //play sound
-        //audioSource.Play();
+
+    // Perform the attack based on the player's class and weapon
+    public void PerformAttack()
+    {
+        
+            //check what the player is holding and perform the attack, using whats in the weapon prefab
+            if (playerWeapon.GetEquippedWeapon() == "Sword")
+            {
+                SwordAttack();
+            }
+            else if (playerWeapon.GetEquippedWeapon() == "Bow")
+            {
+                BowAttack(facingRight ? 1 : -1);
+            }
+            else if (playerWeapon.GetEquippedWeapon() == "Staff")
+            {
+                StaffAttack(facingRight ? 1 : -1);
+            }
+            else
+            {
+                Debug.LogError("No weapon equipped.");
+            }
+        
+        
     }
-    //bow attack
+
+    // Sword attack (perform action when the sword swings)
+    public void SwordAttack()
+    {
+        weaponTransform.localRotation = Quaternion.Euler(0, 0, 90);
+        StartCoroutine(ResetWeaponRotation());
+    }
+
+    private IEnumerator ResetWeaponRotation()
+    {
+        yield return new WaitForSeconds(0.1f);
+        weaponTransform.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    // Bow attack (shoot arrow in specified direction)
     public void BowAttack(int direction)
     {
         projectile.LaunchArrow(direction);
-        //play sound
-        //audioSource.Play();
     }
 
-
-    private void ShootProjectile()
+    // Staff attack (shoot fireball in specified direction)
+    public void StaffAttack(int direction)
     {
-        int direction = facingRight ? 1 : -1;
-
-        // Check the equipped weapon and execute the corresponding attack
-        switch (playerWeapon.GetEquippedWeapon())
-        {
-            case "Bow":
-                Debug.Log("Shooting Arrow!");
-                projectile.LaunchArrow(direction);
-                //PlayAttackSound();
-                break;
-
-            case "Sword":
-                Debug.Log("Swinging Sword!");
-                SwordAttack();
-                break;
-
-            case "Default":
-            default:
-                Debug.Log("Default projectile launched.");
-                projectile.PlayerLauncher(direction);
-                //PlayAttackSound();
-                Debug.Log("Default projectile launched.");
-                break;
-        }
+        projectile.LaunchFireball(direction);
     }
-
-
-    //weapon dirwection
 
     // Update weapon rotation based on player's facing direction
     private void UpdateWeaponRotation()
@@ -216,19 +206,44 @@ public class playercontrol : MonoBehaviour
 
         if (facingRight)
         {
-            // Rotate weapon to face right
-            
             weaponTransform.localRotation = Quaternion.Euler(0, 0, 0);
+            CheckSwordHit();
         }
         else
         {
-            // Rotate weapon to face left
             weaponTransform.localRotation = Quaternion.Euler(0, 180, 0);
         }
     }
 
-    
-    
+    // Check if the sword hit an enemy
+    public void CheckSwordHit()
+    {
+        /*Collider2D[] hits = Physics2D.OverlapBoxAll(weaponTransform.position, new Vector2(1, 1), 0);
+        //foreach (Collider2D hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                hit.GetComponent<HealthSystem>().TakeDamage(50);
+            }
+        }*/
+    }
 
+    // Set default class and weapon when errors occur
+    private void SetDefaultClassAndWeapon()
+    {
+        if (PlayerSaveData.selectedClass == null)
+        {
+            PlayerSaveData.selectedClass = new PlayerClass();
+        }
 
+        if (PlayerSaveData.selectedWeapon == null)
+        {
+            PlayerSaveData.selectedWeapon = defaultWeapon;
+        }
+
+        PlayerSaveData.selectedClass.className = "Warrior";
+        PlayerSaveData.selectedWeapon.weaponName = "Bow";
+
+        Debug.Log("Player class and weapon set to default: Warrior and Bow.");
+    }
 }

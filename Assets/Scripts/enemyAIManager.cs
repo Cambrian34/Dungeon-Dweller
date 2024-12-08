@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class enemyAIManager : MonoBehaviour
 
@@ -26,7 +27,11 @@ public class enemyAIManager : MonoBehaviour
 
     [Header("Hp")]
     [SerializeField] int hp = 200;
+    private int maxHp = 200;
     HealthSystem healthSystem;
+
+    //healthbar slider
+    [SerializeField] Slider healthSlider;
 
     [Header("Audio")]
     [SerializeField] AudioSource audioSource;
@@ -55,10 +60,11 @@ public class enemyAIManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //move enemy
         //MoveEnemy();
+        UpdateHealthBar();
 
 
     }
@@ -99,20 +105,10 @@ public class enemyAIManager : MonoBehaviour
         //check if enemy is hit by player projectile
         if (collision.CompareTag("Fireball"))
         {
-            //Debug.Log("Break apart!");
-            //destroy enemy
-            //Destroy(gameObject);
-
-            //destroy projectile
+            
             Destroy(collision.gameObject);
-            //break apart enemy
-            //dropFuel();
-            //spwan new enemy
-           // SpawnNewEnemy();
-           //lower hp
+            UpdateHealthBar();
 
-           //drop gold
-            //dropGold();
             healthSystem.TakeDamage(50);
             Debug.Log("Enemy hp: " + healthSystem.GetHealth());
             if (healthSystem.GetHealth() <= 0)
@@ -142,6 +138,7 @@ public class enemyAIManager : MonoBehaviour
             //lower hp
             healthSystem.TakeDamage(60);
             Debug.Log("Enemy hp: " + healthSystem.GetHealth());
+            UpdateHealthBar();
             if (healthSystem.GetHealth() <= 0)
             {
                 Die();
@@ -151,6 +148,14 @@ public class enemyAIManager : MonoBehaviour
 
         //print("enemy hit");
     }
+    //update health bar
+    void UpdateHealthBar()
+    {
+        hp = healthSystem.GetHealth();
+        healthSlider.value = Mathf.Clamp(hp / (float)maxHp, 0f, 1f);
+    }
+
+
     //redact
     //use bounds to move enemy
     public void MoveEnemy()
@@ -277,7 +282,7 @@ public class enemyAIManager : MonoBehaviour
 
     public void LaunchFireball()
     {
-        projectile.LAunchFireEnemyAi();
+        projectile.LaunchFireEnemyAi();
     }
 
     public void LaunchFirebal2()
@@ -286,7 +291,7 @@ public class enemyAIManager : MonoBehaviour
     }
     public void StopMoving()
     {
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
     public pjlauncher GetProjectileLauncher(){
         return projectile;

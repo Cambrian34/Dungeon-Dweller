@@ -1,41 +1,64 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAi : MonoBehaviour
 {
-    [SerializeField] enemyAIManager enemyai;
+    [SerializeField] private enemyAIManager enemyai; 
+    [SerializeField] private GameObject player;
+    [SerializeField] private string currentStateString;
 
-    [SerializeField] GameObject enemyprefab;
-    [SerializeField] GameObject player;
-    [SerializeField] string currentStateString;
     [Header("Config")]
-    [SerializeField] float sightDistance = 10;
+    [SerializeField] private float sightDistance = 10f;
     [SerializeField] private float attackDelay = 0.5f;
+    [SerializeField] private float moveSpeed = 3.0f; // Speed at which enemy moves towards player
 
-    delegate void AIState();
-    AIState currentState;
+    private delegate void AIState();
+    private AIState currentState;
 
-    //trackers==================================================
-    float stateTime = 0;
-    bool justChangedState = false;
-    private Vector3 lastTargetPos;
-    
+    private float stateTime = 0f;
+    private bool justChangedState = false;
+    private Vector3 lastTargetPosition;
     private Vector3 startPosition;
 
-    // Start is called before the first frame update
-     void Start()
-    {
-        ChangeState(IdleState);
+    private Rigidbody2D rb;
 
-        //set original position
-        lastTargetPos = player.transform.position;
-        startPosition = enemyai.transform.position;
+    private void Start()
+    {
+        if (!player)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            if (!player)
+            {
+                Debug.LogError("Player object not found. Please assign it in the inspector or ensure it has the 'Player' tag.");
+                return;
+            }
+        }
+
+        if (!enemyai)
+        {
+            Debug.LogError("EnemyAIManager not assigned. Please assign it in the inspector.");
+            return;
+        }
+
+        // Get the Rigidbody2D component for physics-based movement
+        rb = GetComponent<Rigidbody2D>();
+
+        // Set initial positions
+        lastTargetPosition = player.transform.position;
+        startPosition = transform.position;
+
+        // Ensure enemy gravity is enabled to prevent floating
+        if (rb != null)
+        {
+            rb.gravityScale = 1f;  // Make sure gravity is affecting the enemy
+        }
+
+        ChangeState(IdleState);
     }
 
-    bool CanSeeTarget(){
-        return Vector3.Distance(enemyai.transform.position, player.transform.position) < sightDistance;
+    private bool CanSeeTarget()
+    {
+        return Vector3.Distance(transform.position, player.transform.position) <= sightDistance;
     }
 
     private void IdleState()
@@ -44,52 +67,59 @@ public class EnemyAi : MonoBehaviour
         {
             currentStateString = "IdleState";
         }
+
+        // Rotate to face the player when in sight
         if (CanSeeTarget())
         {
             ChangeState(AttackState);
-            //return;
         }
     }
 
-    void AttackState(){
-        enemyai.MoveToward(player.transform.position);
-        //stop 2 units away from player and shoot
-        
-        //enemy.AimShip(targetShip.transform);
+    private void AttackState()
+    {
         if (stateTime == 0)
         {
             currentStateString = "AttackState";
         }
-        if (Vector3.Distance(enemyai.transform.position, player.transform.position) < 2){
+
+        // Rotate to face the player
+        FacePlayer();
+
+        // Move towards the player
+        Vector3 playerPosition = player.transform.position;
+        enemyai.MoveToward(playerPosition);
+
+        // Stop 2 units away from the player and attack
+        if (Vector3.Distance(transform.position, playerPosition) <= 2f)
+        {
             enemyai.StopMoving();
+
+            if (stateTime > attackDelay)
+            {
+                enemyai.LaunchFireball();
+                stateTime = 0f; // Reset state time to create attack delay
+            }
         }
 
-        if (stateTime > attackDelay)
+        // Transition to ReturnToOriginalPositionState if the player is out of sight
+        if (!CanSeeTarget())
         {
-            enemyai.LaunchFireball();
-            stateTime = 0; // Reset stateTime after shooting to create a delay
-        }
-
-        
-
-
-        if(!CanSeeTarget())
-        {
-            lastTargetPos = player.transform.position;
+            lastTargetPosition = playerPosition;
             ChangeState(ReturnToOriginalPositionState);
         }
     }
 
     private void GetBackToTargetState()
     {
-         if (stateTime == 0)
+        if (stateTime == 0)
         {
             currentStateString = "BackToTargetState";
         }
 
-        enemyai.MoveToward(lastTargetPos);
+        enemyai.MoveToward(lastTargetPosition);
 
-        if (Vector3.Distance(enemyai.transform.position, lastTargetPos) < 0.5f){
+        if (Vector3.Distance(transform.position, lastTargetPosition) < 0.5f)
+        {
             ChangeState(IdleState);
         }
     }
@@ -101,28 +131,28 @@ public class EnemyAi : MonoBehaviour
             currentStateString = "ReturnToOriginalPositionState";
         }
 
-        // Move back toward the original position
         enemyai.MoveToward(startPosition);
 
-        // If reached original position, go back to idle
-        if (Vector3.Distance(enemyai.transform.position, startPosition) < 0.5f)
+        if (Vector3.Distance(transform.position, startPosition) < 0.5f)
         {
             ChangeState(IdleState);
         }
     }
 
-
-    void ChangeState(AIState newAIState){
+    private void ChangeState(AIState newAIState)
+    {
         currentState = newAIState;
         justChangedState = true;
-        stateTime = 0;
+        stateTime = 0f;
     }
-    void AITick(){
+
+    private void AITick()
+    {
         if (currentState == null) return;
 
         if (justChangedState)
         {
-            stateTime = 0;
+            stateTime = 0f;
             justChangedState = false;
         }
 
@@ -130,8 +160,26 @@ public class EnemyAi : MonoBehaviour
         stateTime += Time.deltaTime;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FacePlayer()
+    {
+        if (player.transform.position.x > transform.position.x)
+        {
+            // Rotate to face right
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            // Rotate to face left
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+    }
+
+    public string GetCurrentState()
+    {
+        return currentStateString;
+    }
+
+    private void Update()
     {
         AITick();
     }
